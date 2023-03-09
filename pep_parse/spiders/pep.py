@@ -1,6 +1,8 @@
-import scrapy
-from pep_parse.items import PepParseItem
 import re
+
+import scrapy
+
+from pep_parse.items import PepParseItem
 
 
 class PepSpider(scrapy.Spider):
@@ -12,7 +14,6 @@ class PepSpider(scrapy.Spider):
         all_authors = response.css('a.pep.reference.internal::attr(href)')
         for author_link in all_authors:
             yield response.follow(author_link, callback=self.parse_pep)
-        #yield response.follow(all_authors[0], callback=self.parse_pep)
 
     def parse_pep(self, response):
         pattern = r'PEP (?P<number>\d+) – ((?P<name>.*))'
